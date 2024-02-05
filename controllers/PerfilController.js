@@ -15,7 +15,7 @@ const crearPerfil = async (req, res) => {
         const perf = new Perfil(req.body)
         await perf.save()
 
-        res.json({msg:"Perfil registrado correctamente"})
+        res.json(perf)
 
     } catch (error) {
         console.log(error)
@@ -62,7 +62,15 @@ const editarPerfil = async (req, res) => {
 }
 
 const habilitarPerfil = async (req, res) => {
-
+    const {id} = req.params
+    try {
+        const perfil = await Perfil.findOne({_id: id})
+        perfil.habilitado = !perfil.habilitado
+        await perfil.save()
+        res.json(perfil)
+    } catch (error) {
+        
+    }
 }
 
 const listarPerfil = async (req, res) => {

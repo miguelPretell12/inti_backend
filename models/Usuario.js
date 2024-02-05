@@ -36,7 +36,16 @@ const usuarioSchema = mongoose.Schema({
     perfil : {
         type: mongoose.Schema.Types.ObjectId,
         ref:"Perfil"
-    }
+    },
+    encargado : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Usuario"
+    },
+    colaboradores: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Usuario"
+    }]
+    
 },{
     timestamps: true
 });

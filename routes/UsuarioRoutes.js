@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post("/login", iniciarSesion)
 router.post("/crear",registrar)
-router.get("/perfil/:id",obtenerUsuario)
+router.get("/obtener-usuario/:id",obtenerUsuario)
 router.put("/:id", actualizarUsuario)
 router.get("/listar-usuarios", listarUsuarios)
 router.get("/verificar-token/:token", verificarToken)

@@ -55,7 +55,7 @@ const obtenerUsuario = async (req, res) => {
 
 const actualizarUsuario = async (req, res) => {
     const {id} = req.params
-    const {nombre, apellido, email} = req.body
+    const {nombre, apellido, email, perfil, estado} = req.body
     try {
         const usuarioExiste = await Usuario.findOne({_id: id})
     
@@ -67,6 +67,8 @@ const actualizarUsuario = async (req, res) => {
         usuarioExiste.nombre = nombre || usuarioExiste.nombre;
         usuarioExiste.apellido = apellido || usuarioExiste.apellido;
         usuarioExiste.email = email || usuarioExiste.email;
+        usuarioExiste.perfil = perfil || usuarioExiste.perfil;
+        usuarioExiste.estado = estado || usuarioExiste.estado;
 
         const usuarioActualizado = await usuarioExiste.save()
 
