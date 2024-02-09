@@ -36,6 +36,44 @@ const registrar = async (req,res) => {
     }
 }
 
+const crearColaborador = async (req,res) => {
+    const {email} = req.body;
+
+    const existeUsuario = await Usuario.findOne({email: email})
+
+    if(existeUsuario) {
+        const error = new Error('E-mail ya registrado');
+        return res.status(400).json({msg: error.message});
+    }
+
+    try {
+        const usuario = new Usuario(req.body)
+        usuario.token=generarId()
+        await usuario.save()
+
+        confirmarCuentaEmail({
+            email: usuario.email,
+            nombre: usuario.nombre,
+            token: usuario.token
+        })
+
+        const existeUsuarioSupervisor = await Usuario.findOne({_id: usuario.supervisor})
+
+        existeUsuarioSupervisor.colaboradores.push(usuario._id)
+        
+        await existeUsuarioSupervisor.save()
+        console.log(existeUsuarioSupervisor)
+        res.json(await Usuario.findOne({_id: usuario._id}).select("nombre apellido email ").populate({
+            path: "perfil",
+            select: "nombre -_id", // Especifica los campos que deseas obtener del perfil
+          }) )
+        // res.json({msg:"Usuario Creado Correctamente"})
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const obtenerUsuario = async (req, res) => {
     const {id} = req.params
     
@@ -242,6 +280,7 @@ const listarUsuarios = async (req, res) => {
 
 export {
     registrar,
+    crearColaborador,
     obtenerUsuario,
     actualizarUsuario,
     actualizarEstado,

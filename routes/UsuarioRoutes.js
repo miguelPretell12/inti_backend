@@ -1,10 +1,11 @@
 import express from 'express'
-import { registrar,obtenerUsuario, actualizarEstado, actualizarUsuario, confirmarCuenta, iniciarSesion, olvidePassword, verificarToken, nuevoPassword, listarUsuarios } from '../controllers/UsuarioController.js'
+import { registrar,crearColaborador,obtenerUsuario, actualizarEstado, actualizarUsuario, confirmarCuenta, iniciarSesion, olvidePassword, verificarToken, nuevoPassword, listarUsuarios } from '../controllers/UsuarioController.js'
 
 const router = express.Router()
 
 router.post("/login", iniciarSesion)
 router.post("/crear",registrar)
+router.post("/crear-colaborador", crearColaborador)
 router.get("/obtener-usuario/:id",obtenerUsuario)
 router.put("/:id", actualizarUsuario)
 router.get("/listar-usuarios", listarUsuarios)

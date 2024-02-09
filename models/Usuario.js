@@ -44,7 +44,11 @@ const usuarioSchema = mongoose.Schema({
     colaboradores: [{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Usuario"
-    }]
+    }],
+    supervisor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Usuario"
+    }
     
 },{
     timestamps: true
