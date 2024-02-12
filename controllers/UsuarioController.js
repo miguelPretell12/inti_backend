@@ -74,6 +74,16 @@ const crearColaborador = async (req,res) => {
     }
 }
 
+const obtenerColaboradores = async (req, res) => {
+    const {id} = req.params;
+
+    const usuarios = await Usuario.find({supervisor:id}).select("nombre apellido email estado _id").populate({
+        path: "perfil",
+        select: "nombre -_id", // Especifica los campos que deseas obtener del perfil
+      })
+    res.json(usuarios)
+}
+
 const obtenerUsuario = async (req, res) => {
     const {id} = req.params
     
@@ -289,5 +299,6 @@ export {
     olvidePassword,
     verificarToken,
     nuevoPassword,
-    listarUsuarios
+    listarUsuarios,
+    obtenerColaboradores
 }
