@@ -25,7 +25,7 @@ const registrar = async (req,res) => {
             token: usuario.token
         })
 
-        res.json(await Usuario.findOne({_id: usuario._id}).select("nombre apellido email ").populate({
+        res.json(await Usuario.findOne({_id: usuario._id}).select("nombre apellido email _id ").populate({
             path: "perfil",
             select: "nombre -_id", // Especifica los campos que deseas obtener del perfil
           }) )
@@ -288,6 +288,12 @@ const listarUsuarios = async (req, res) => {
     res.json(usuarios)
 }
 
+const perfil = async ( req, res) => {
+    const {usuario} = req
+
+    res.json(usuario)
+}
+
 export {
     registrar,
     crearColaborador,
@@ -300,5 +306,6 @@ export {
     verificarToken,
     nuevoPassword,
     listarUsuarios,
-    obtenerColaboradores
+    obtenerColaboradores,
+    perfil
 }
